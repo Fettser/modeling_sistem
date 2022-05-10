@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>icons/basket.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/rotation.png</file>
+    </qresource>
+    <qresource prefix="/elements">
+        <file>img/battery.png</file>
+        <file>img/resistor.png</file>
+        <file>img/shakal.jpg</file>
+    </qresource>
+</RCC>
