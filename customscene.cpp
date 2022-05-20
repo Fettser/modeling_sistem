@@ -129,13 +129,13 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             }
         } else if (event->button() == Qt::RightButton) {
             if (dynamic_cast<QGraphicsLineItem*>(this->itemAt(event->scenePos(), QTransform())) != nullptr) {
+                delete currentLine;
+                currentLine = nullptr;
                 QGraphicsScene::mousePressEvent(event);
             } else {
                 if (m_typeElement != WireType) {
                     setTypeElement(6);
                 }
-                setPreviousPosition(QPointF(0,0));
-                setNextPosition(QPointF(0,0));
             }
         }
     } else {
@@ -145,7 +145,7 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void CustomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (m_leftMouseButtonPressed && m_typeElement == WireType) {
+    if (m_leftMouseButtonPressed && m_typeElement == WireType && currentLine != nullptr) {
 
         QGraphicsLineItem *line = qgraphicsitem_cast<QGraphicsLineItem *>(currentLine);
         if (abs(m_previousPosition.x() - event->scenePos().x()) > abs(m_previousPosition.y() - event->scenePos().y())) {
@@ -167,10 +167,10 @@ void CustomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::RightButton && m_typeElement == WireType) {
-        delete currentLine;
-        currentLine = nullptr;
-        setNextPosition(QPointF(0,0));
-        setPreviousPosition(QPointF(0,0));
+        if (currentLine) {
+            delete currentLine;
+            currentLine = nullptr;
+        }
         if (m_leftMouseButtonPressed){
             if (abs(m_previousPosition.x() - event->scenePos().x()) > abs(m_previousPosition.y() - event->scenePos().y())) {
                 setPreviousPosition(QPointF(setElementPos(event->scenePos()).x(),
