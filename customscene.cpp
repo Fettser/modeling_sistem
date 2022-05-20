@@ -1,6 +1,8 @@
 #include "customscene.h"
 #include "resistor.h"
+#include "capacitor.h"
 #include "battery.h"
+#include "inductor.h"
 #include "math.h"
 #include "wire.h"
 
@@ -74,24 +76,38 @@ void CustomScene::setTypeElement(const int type) {
 
 void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     emit resetEl();
-    Element *el = dynamic_cast<Element*>(this->itemAt(event->scenePos(), QTransform()));
-    if (el == nullptr) {
+    if (dynamic_cast<Element*>(this->itemAt(event->scenePos(), QTransform())) == nullptr) {
         if (event->button() == Qt::LeftButton) {
             switch (m_typeElement) {
             case BatteryType : {
-                Battery *circle = new Battery(this);
-                connect(circle, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
-                circle->setPos(setElementPos(event->scenePos()));
-                addItem(circle);
+                Battery *battery = new Battery(this);
+                connect(battery, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
+                battery->setPos(setElementPos(event->scenePos()));
+                addItem(battery);
                 break;
             }
             case ResistorType : {
-                Resistor *square = new Resistor(this);
-                connect(square, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
-                square->setPos(setElementPos(event->scenePos()));
-                addItem(square);
+                Resistor *resistor = new Resistor(this);
+                connect(resistor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
+                resistor->setPos(setElementPos(event->scenePos()));
+                addItem(resistor);
                 break;
-            } case WireType: {
+            }
+            case CapacitorType: {
+                Capacitor *capacitor = new Capacitor(this);
+                connect(capacitor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
+                capacitor->setPos(setElementPos(event->scenePos()));
+                addItem(capacitor);
+                break;
+            }
+            case InductorType: {
+                Inductor *inductor = new Inductor(this);
+                connect(inductor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
+                inductor->setPos(setElementPos(event->scenePos()));
+                addItem(inductor);
+                break;
+            }
+            case WireType: {
                 if (m_previousPosition.isNull() && m_nextPosition.isNull()) {
                     setNextPosition(setElementPos(event->scenePos()));
                     setPreviousPosition(setElementPos(event->scenePos()));
@@ -105,6 +121,7 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
                 line->setPen(QPen(Qt::black, 4, Qt::SolidLine));
                 addItem(currentLine);
                 line->setLine(QLineF(m_previousPosition, m_previousPosition));
+                break;
             }
             default : {
                 break;
@@ -115,7 +132,7 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
                 QGraphicsScene::mousePressEvent(event);
             } else {
                 if (m_typeElement != WireType) {
-                    setTypeElement(3);
+                    setTypeElement(6);
                 }
                 setPreviousPosition(QPointF(0,0));
                 setNextPosition(QPointF(0,0));
@@ -164,7 +181,7 @@ void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         m_leftMouseButtonPressed = false;
-        setTypeElement(3);
+        setTypeElement(6);
     } else {
         QGraphicsScene::mouseReleaseEvent(event);
     }

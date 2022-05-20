@@ -10,9 +10,11 @@ CONFIG += c++11
 
 SOURCES += \
     battery.cpp \
+    capacitor.cpp \
     customscene.cpp \
     customview.cpp \
     element.cpp \
+    inductor.cpp \
     main.cpp \
     mainwindow.cpp \
     resistor.cpp \
@@ -21,9 +23,11 @@ SOURCES += \
 
 HEADERS += \
     battery.h \
+    capacitor.h \
     customscene.h \
     customview.h \
     element.h \
+    inductor.h \
     mainwindow.h \
     resistor.h \
     settingsdialog.h \

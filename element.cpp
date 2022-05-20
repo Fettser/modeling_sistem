@@ -15,7 +15,7 @@ Element::~Element() {
 }
 
 QRectF Element::boundingRect() const {
-    return QRectF(-48, -25, 97, 50);
+    return QRectF(-50, -25, 100, 50);
 }
 
 QPointF Element::deltaMouseCoord() const {

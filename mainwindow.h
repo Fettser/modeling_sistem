@@ -28,6 +28,8 @@ private slots:
     void onPushResistor();
     void onPushWire();
     void onPushStart();
+    void onPushCapacitor();
+    void onPushInductor();
     void elementSelected(QGraphicsItem *el);
     void deleteButton();
     void settingsButton();

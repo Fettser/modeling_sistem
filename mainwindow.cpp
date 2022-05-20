@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addBattery, SIGNAL(clicked()), this, SLOT(onPushBattery()));
     connect(ui->addResistor, SIGNAL(clicked()), this, SLOT(onPushResistor()));
     connect(ui->addWire, SIGNAL(clicked()), this, SLOT(onPushWire()));
+    connect(ui->addCapacitor, SIGNAL(clicked()), this, SLOT(onPushCapacitor()));
+    connect(ui->addInductor, SIGNAL(clicked()), this, SLOT(onPushInductor()));
     connect(ui->startButton, SIGNAL(clicked()), SLOT(onPushStart()));
     connect(settings, SIGNAL(triggered()), this, SLOT(settingsButton()));
     connect(remove, SIGNAL(triggered()), SLOT(deleteButton()));
@@ -69,6 +71,18 @@ void MainWindow::onPushResistor() {
 
 void MainWindow::onPushWire() {
     scene->setTypeElement(CustomScene::WireType);
+    scene->setPreviousPosition(QPointF(0,0));
+    scene->setNextPosition(QPointF(0,0));
+}
+
+void MainWindow::onPushCapacitor() {
+    scene->setTypeElement(CustomScene::CapacitorType);
+    scene->setPreviousPosition(QPointF(0,0));
+    scene->setNextPosition(QPointF(0,0));
+}
+
+void MainWindow::onPushInductor() {
+    scene->setTypeElement(CustomScene::InductorType);
     scene->setPreviousPosition(QPointF(0,0));
     scene->setNextPosition(QPointF(0,0));
 }

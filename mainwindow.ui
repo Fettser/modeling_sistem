@@ -43,6 +43,20 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="addCapacitor">
+          <property name="text">
+           <string>Capacitor</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addInductor">
+          <property name="text">
+           <string>Inductor</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="addWire">
           <property name="text">
            <string>Wire</string>

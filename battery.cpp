@@ -45,10 +45,17 @@ void Battery::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     QFont font = painter->font();
     font.setPixelSize(16);
     if(this->isSelected()) {
-        painter->drawRect(-48, -25, 97, 50);
+        painter->drawRect(-50, -25, 100, 50);
     }
     painter->setFont(font);
-    painter->drawPixmap(-48, -25, QPixmap(":elements/img/battery.png"));
+    painter->setFont(font);
+    QPen pen = QPen();
+    pen.setWidth(4);
+    painter->setPen(pen);
+    painter->drawLine(-48, 0, -5, 0);
+    painter->drawLine(5, 0, 49, 0);
+    painter->drawLine(-5, 10, -5, -10);
+    painter->drawLine(5, 20, 5, -20);
     painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignTop, QString::number(m_voltage)+"V");
     painter->drawText(this->boundingRect(), Qt::AlignRight | Qt::AlignTop, QString::number(m_resistance) + "Om");
     Q_UNUSED(option);

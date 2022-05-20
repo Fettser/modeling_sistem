@@ -34,7 +34,9 @@ public:
     enum ElementTypes {
         BatteryType,
         ResistorType,
-        WireType
+        WireType,
+        CapacitorType,
+        InductorType
     };
 
 signals:

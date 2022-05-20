@@ -29,10 +29,15 @@ void Resistor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     QFont font = painter->font();
     font.setPixelSize(16);
     if(this->isSelected()) {
-        painter->drawRect(-48, -25, 97, 50);
+        painter->drawRect(-50, -25, 100, 50);
     }
     painter->setFont(font);
-    painter->drawPixmap(-48,-25,QPixmap(":elements/img/resistor.png"));
+    QPen pen = QPen();
+    pen.setWidth(4);
+    painter->setPen(pen);
+    painter->drawRect(-35, -20, 70, 40);
+    painter->drawLine(-48, 0, -35, 0);
+    painter->drawLine(35, 0, 49, 0);
     painter->drawText(this->boundingRect(), Qt::AlignCenter, QString::number(m_resistance) + " Om");
     Q_UNUSED(option);
     Q_UNUSED(widget);
