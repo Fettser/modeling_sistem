@@ -10,22 +10,22 @@ class Inductor : public Element
 {
     Q_OBJECT
 
-    Q_PROPERTY(int inductance
+    Q_PROPERTY(QString inductance
                READ inductance WRITE setInductance
                NOTIFY inductanceChanged)
 public:
-    explicit Inductor(QObject *parent = 0);
+    explicit Inductor(QObject *parent = 0, QString inductance = "10 mG");
     ~Inductor();
 
-    int inductance() const;
-    void setInductance(const int type);
+    QString inductance() const;
+    void setInductance(const QString inductance);
 
 signals:
     void inductanceChanged();
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    int m_inductance = 10;
+    QString m_inductance = "10 mG";
 };
 
 #endif // INDUCTOR_H

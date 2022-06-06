@@ -9,7 +9,10 @@
 #include "settingsdialog.h"
 #include "resistor.h"
 #include "battery.h"
+#include <QSvgGenerator>
+#include <QFileDialog>
 #include <QHash>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,19 +30,24 @@ private slots:
     void onPushBattery();
     void onPushResistor();
     void onPushWire();
-    void onPushStart();
     void onPushCapacitor();
     void onPushInductor();
+    void onPushSwitch();
     void elementSelected(QGraphicsItem *el);
     void deleteButton();
     void settingsButton();
     void rotateButton();
-    void settingsOkPushed(QHash<const char *, QLineEdit*> *params);
+    void settingsOkPushed(QHash<const char *, QLineEdit*> *lines, QHash<const char *, QComboBox*> *boxes);
     void resetSelectedEl();
+    void onSaveButton();
+    void onSaveSVGButton();
+    void onOpenButton();
+    void onClearScene();
 
 signals:
 
 private:
+    void openFile();
     int m_typeElement;
     Ui::MainWindow *ui;
     CustomScene *scene;
@@ -48,5 +56,7 @@ private:
     QAction *rotate;
     settingsDialog *dialog;
     QGraphicsItem *selectedEl = nullptr;
+    QString path;
+    QMessageBox *msgBox;
 };
 #endif // MAINWINDOW_H

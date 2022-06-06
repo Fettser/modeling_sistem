@@ -14,6 +14,7 @@ class CustomScene : public QGraphicsScene {
     Q_PROPERTY(QPointF previousPosition
                READ previousPosition WRITE setPreviousPosition
                NOTIFY previousPositionChanged)
+
     Q_PROPERTY(QPointF nextPosition
                READ nextPosition WRITE setNextPosition
                NOTIFY nextPositionChanged)
@@ -36,7 +37,8 @@ public:
         ResistorType,
         WireType,
         CapacitorType,
-        InductorType
+        InductorType,
+        SwitchType
     };
 
 signals:

@@ -10,21 +10,22 @@ class Battery : public Element
 {
     Q_OBJECT
 
-    Q_PROPERTY(int resistance
+    Q_PROPERTY(QString resistance
                READ resistance WRITE setResistance
                NOTIFY resistanceChanged)
 
-    Q_PROPERTY(int voltage
+    Q_PROPERTY(QString voltage
                READ voltage WRITE setVoltage
                NOTIFY voltageChanged)
+
 public:
-    explicit Battery(QObject *parent = 0);
+    explicit Battery(QObject *parent = 0, QString voltage = "5 V", QString resistance = "1 Om");
     ~Battery();
 
-    int resistance() const;
-    void setResistance(const int type);
-    int voltage() const;
-    void setVoltage(const int type);
+    QString resistance() const;
+    void setResistance(const QString resistance);
+    QString voltage() const;
+    void setVoltage(const QString voltage);
 
 signals:
     void resistanceChanged();
@@ -32,8 +33,8 @@ signals:
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    int m_resistance = 1;
-    int m_voltage = 5;
+    QString m_resistance = "1 Om";
+    QString m_voltage = "5 V";
 };
 
 #endif // BATTERY_H

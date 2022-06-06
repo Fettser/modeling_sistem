@@ -2,20 +2,21 @@
 #include <QPainter>
 #include <QCursor>
 
-Inductor::Inductor(QObject *parent) :
+Inductor::Inductor(QObject *parent, QString inductance) :
     Element(parent) {
-
+    setObjectName("inductor");
+    setInductance(inductance);
 }
 Inductor::~Inductor() {
 
 }
 
-int Inductor::inductance() const
+QString Inductor::inductance() const
 {
     return m_inductance;
 }
 
-void Inductor::setInductance(const int inductance)
+void Inductor::setInductance(const QString inductance)
 {
     if (m_inductance == inductance)
         return;
@@ -41,7 +42,7 @@ void Inductor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawArc(-20, -10, 20, 20, 0, 2880);
     painter->drawArc(0, -10, 20, 20, 0, 2880);
     painter->drawArc(20, -10, 20, 20, 0, 2880);
-    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignBottom, QString::number(m_inductance) + " pF");
+    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignBottom, m_inductance);
     Q_UNUSED(option);
     Q_UNUSED(widget);
 }

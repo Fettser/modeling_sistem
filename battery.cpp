@@ -3,21 +3,23 @@
 #include <QCursor>
 #include <QPixmap>
 
-Battery::Battery(QObject *parent) :
+Battery::Battery(QObject *parent, QString voltage, QString resistance) :
     Element(parent)
 {
-
+    setObjectName("battery");
+    setVoltage(voltage);
+    setResistance(resistance);
 }
 Battery::~Battery() {
 
 }
 
-int Battery::resistance() const
+QString Battery::resistance() const
 {
     return m_resistance;
 }
 
-void Battery::setResistance(const int resistance)
+void Battery::setResistance(const QString resistance)
 {
     if (m_resistance == resistance)
         return;
@@ -26,12 +28,12 @@ void Battery::setResistance(const int resistance)
     emit resistanceChanged();
 }
 
-int Battery::voltage() const
+QString Battery::voltage() const
 {
     return m_voltage;
 }
 
-void Battery::setVoltage(const int voltage)
+void Battery::setVoltage(const QString voltage)
 {
     if (m_voltage == voltage)
         return;
@@ -48,7 +50,6 @@ void Battery::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         painter->drawRect(-50, -25, 100, 50);
     }
     painter->setFont(font);
-    painter->setFont(font);
     QPen pen = QPen();
     pen.setWidth(4);
     painter->setPen(pen);
@@ -56,8 +57,8 @@ void Battery::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawLine(5, 0, 49, 0);
     painter->drawLine(-5, 10, -5, -10);
     painter->drawLine(5, 20, 5, -20);
-    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignTop, QString::number(m_voltage)+"V");
-    painter->drawText(this->boundingRect(), Qt::AlignRight | Qt::AlignTop, QString::number(m_resistance) + "Om");
+    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignTop, m_voltage);
+    painter->drawText(this->boundingRect(), Qt::AlignRight | Qt::AlignTop, m_resistance);
     Q_UNUSED(option);
     Q_UNUSED(widget);
 }

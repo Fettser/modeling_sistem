@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QLineEdit>
 #include <QHash>
+#include <QComboBox>
 
 namespace Ui {
 class settingsDialog;
@@ -20,7 +21,8 @@ public:
 
 signals:
     void onPushCancel();
-    void afterOkPushed(QHash<const char *, QLineEdit*> *params);
+    void afterOkPushed(QHash<const char *, QLineEdit*> *lines, QHash<const char *, QComboBox*> *boxes);
+
 private slots:
     void onPushOk();
     void closeClicked();
@@ -30,6 +32,7 @@ private:
     void cancelPushed();
     QColor *color;
     QHash<const char *, QLineEdit*> lines;
+    QHash<const char *, QComboBox*> boxes;
 };
 
 #endif // SETTINGSDIALOG_H

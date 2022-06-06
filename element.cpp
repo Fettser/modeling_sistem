@@ -36,6 +36,20 @@ void Element::setIsSelected(const bool isSelected) {
     emit isSelectedChanged();
 }
 
+int Element::angle() const
+{
+    return m_angle;
+}
+
+void Element::setAngle(const int angle) {
+    if (m_angle == angle) {
+        return;
+    }
+
+    m_angle = angle;
+    emit angleChanged();
+}
+
 void Element::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     setDeltaMouseCoord(this->scenePos() - event->scenePos());
     if (event->button() == Qt::LeftButton) {
@@ -72,7 +86,6 @@ void Element::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 void Element::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     this->setCursor(QCursor(Qt::ArrowCursor));
-    qDebug() << this->pos();
     QGraphicsItem::mouseReleaseEvent(event);
 }
 

@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui xml svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,6 +19,7 @@ SOURCES += \
     mainwindow.cpp \
     resistor.cpp \
     settingsdialog.cpp \
+    switch.cpp \
     wire.cpp
 
 HEADERS += \
@@ -31,6 +32,7 @@ HEADERS += \
     mainwindow.h \
     resistor.h \
     settingsdialog.h \
+    switch.h \
     wire.h
 
 FORMS += \

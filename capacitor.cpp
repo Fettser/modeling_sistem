@@ -2,20 +2,21 @@
 #include <QPainter>
 #include <QCursor>
 
-Capacitor::Capacitor(QObject *parent) :
-    Element(parent) {
-
+Capacitor::Capacitor(QObject *parent, QString capacity) : Element(parent) {
+    setObjectName("capacitor");
+    setCapacity(capacity);
 }
+
 Capacitor::~Capacitor() {
 
 }
 
-int Capacitor::capacity() const
+QString Capacitor::capacity() const
 {
     return m_capacity;
 }
 
-void Capacitor::setCapacity(const int capacity)
+void Capacitor::setCapacity(const QString capacity)
 {
     if (m_capacity == capacity)
         return;
@@ -39,7 +40,7 @@ void Capacitor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawLine(5, 0, 49, 0);
     painter->drawLine(-5, 20, -5, -20);
     painter->drawLine(5, 20, 5, -20);
-    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignTop, QString::number(m_capacity) + " pF");
+    painter->drawText(this->boundingRect(), Qt::AlignLeft | Qt::AlignTop, m_capacity);
     Q_UNUSED(option);
     Q_UNUSED(widget);
 }

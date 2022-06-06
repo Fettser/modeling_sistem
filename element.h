@@ -16,6 +16,10 @@ class Element: public QObject, public QGraphicsItem {
                READ isSelected WRITE setIsSelected
                NOTIFY isSelectedChanged)
 
+    Q_PROPERTY(int angle
+               READ angle WRITE setAngle
+               NOTIFY angleChanged)
+
 public:
     explicit Element(QObject *parent = 0);
     ~Element();
@@ -26,11 +30,15 @@ public:
     bool isSelected() const;
     void setIsSelected(const bool isSelected);
 
+    int angle() const;
+    void setAngle(const int angle);
+
 signals:
     void onSelectElement(QGraphicsItem *el);
     void onRotateElement(QGraphicsItem *el);
     void deltaMouseCoordChanged();
     void isSelectedChanged();
+    void angleChanged();
 
 private slots:
     void onChangeSelect();
@@ -41,7 +49,8 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     QPointF m_deltaMouseCoord = QPointF(0,0);
-    bool m_isSelected;
+    bool m_isSelected = false;
+    int m_angle = 0;
 };
 
 #endif // ELEMENT_H

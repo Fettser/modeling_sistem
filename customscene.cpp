@@ -5,6 +5,7 @@
 #include "inductor.h"
 #include "math.h"
 #include "wire.h"
+#include "switch.h"
 
 static QPointF setElementPos(QPointF position) {
     int x = position.x();
@@ -80,31 +81,38 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
             switch (m_typeElement) {
             case BatteryType : {
-                Battery *battery = new Battery(this);
+                Battery *battery = new Battery(this, "5 V", "1 Om");
                 connect(battery, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
                 battery->setPos(setElementPos(event->scenePos()));
                 addItem(battery);
                 break;
             }
             case ResistorType : {
-                Resistor *resistor = new Resistor(this);
+                Resistor *resistor = new Resistor(this, "10 Om");
                 connect(resistor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
                 resistor->setPos(setElementPos(event->scenePos()));
                 addItem(resistor);
                 break;
             }
             case CapacitorType: {
-                Capacitor *capacitor = new Capacitor(this);
+                Capacitor *capacitor = new Capacitor(this, "10 pF");
                 connect(capacitor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
                 capacitor->setPos(setElementPos(event->scenePos()));
                 addItem(capacitor);
                 break;
             }
             case InductorType: {
-                Inductor *inductor = new Inductor(this);
+                Inductor *inductor = new Inductor(this, "10 mG");
                 connect(inductor, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
                 inductor->setPos(setElementPos(event->scenePos()));
                 addItem(inductor);
+                break;
+            }
+            case SwitchType: {
+                Switch *my_switch = new Switch(this);
+                connect(my_switch, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
+                my_switch->setPos(setElementPos(event->scenePos()));
+                addItem(my_switch);
                 break;
             }
             case WireType: {
@@ -115,11 +123,12 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
                     setPreviousPosition(m_nextPosition);
                 }
                 m_leftMouseButtonPressed = true;
-                Wire *line = new Wire(this);
+                Wire *line = new Wire(this, QPointF(0,0), QPointF(0,0));
                 connect(line, SIGNAL(onSelectElement(QGraphicsItem*)), parent(), SLOT(elementSelected(QGraphicsItem*)));
                 currentLine = line;
                 line->setPen(QPen(Qt::black, 4, Qt::SolidLine));
                 addItem(currentLine);
+                line->setFirstPoint(m_previousPosition);
                 line->setLine(QLineF(m_previousPosition, m_previousPosition));
                 break;
             }
@@ -147,7 +156,7 @@ void CustomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (m_leftMouseButtonPressed && m_typeElement == WireType && currentLine != nullptr) {
 
-        QGraphicsLineItem *line = qgraphicsitem_cast<QGraphicsLineItem *>(currentLine);
+        Wire *line = qgraphicsitem_cast<Wire *>(currentLine);
         if (abs(m_previousPosition.x() - event->scenePos().x()) > abs(m_previousPosition.y() - event->scenePos().y())) {
             line->setLine(QLineF(m_previousPosition, QPointF(setElementPos(event->scenePos()).x(),
                                                              m_previousPosition.y())));
@@ -159,6 +168,7 @@ void CustomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             setNextPosition(QPointF(m_previousPosition.x(),
                                     setElementPos(event->scenePos()).y()));
         }
+        line->setSecondPoint(m_nextPosition);
     } else {
         QGraphicsScene::mouseMoveEvent(event);
     }
@@ -181,7 +191,9 @@ void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         m_leftMouseButtonPressed = false;
-        setTypeElement(6);
+        setTypeElement(CustomScene::WireType);
+        setNextPosition(QPointF(0, 0));
+        setPreviousPosition(QPointF(0, 0));
     } else {
         QGraphicsScene::mouseReleaseEvent(event);
     }

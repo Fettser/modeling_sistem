@@ -10,22 +10,23 @@ class Capacitor : public Element
 {
     Q_OBJECT
 
-    Q_PROPERTY(int capacity
+    Q_PROPERTY(QString capacity
                READ capacity WRITE setCapacity
                NOTIFY capacityChanged)
+
 public:
-    explicit Capacitor(QObject *parent = 0);
+    explicit Capacitor(QObject *parent = 0, QString capacity = "10 pF");
     ~Capacitor();
 
-    int capacity() const;
-    void setCapacity(const int type);
+    QString capacity() const;
+    void setCapacity(const QString capacity);
 
 signals:
     void capacityChanged();
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    int m_capacity = 10;
+    QString m_capacity = "10 pF";
 };
 
 #endif // CAPACITOR_H
